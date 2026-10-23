@@ -1,0 +1,77 @@
+{
+  "_chakra-petch-500-normal-BR1ody1F.woff2": {
+    "file": "assets/chakra-petch-500-normal-BR1ody1F.woff2",
+    "src": "_chakra-petch-500-normal-BR1ody1F.woff2"
+  },
+  "_chakra-petch-500-normal-CnUQnZ4D.woff": {
+    "file": "assets/chakra-petch-500-normal-CnUQnZ4D.woff",
+    "src": "_chakra-petch-500-normal-CnUQnZ4D.woff"
+  },
+  "_chakra-petch-600-normal-DQKfcdKo.woff": {
+    "file": "assets/chakra-petch-600-normal-DQKfcdKo.woff",
+    "src": "_chakra-petch-600-normal-DQKfcdKo.woff"
+  },
+  "_chakra-petch-600-normal-DVQm9bgb.woff2": {
+    "file": "assets/chakra-petch-600-normal-DVQm9bgb.woff2",
+    "src": "_chakra-petch-600-normal-DVQm9bgb.woff2"
+  },
+  "_chakra-petch-700-normal-CnDBPjkL.woff2": {
+    "file": "assets/chakra-petch-700-normal-CnDBPjkL.woff2",
+    "src": "_chakra-petch-700-normal-CnDBPjkL.woff2"
+  },
+  "_chakra-petch-700-normal-D1s_c2du.woff": {
+    "file": "assets/chakra-petch-700-normal-D1s_c2du.woff",
+    "src": "_chakra-petch-700-normal-D1s_c2du.woff"
+  },
+  "_fonts-DokjQgew.css": {
+    "file": "assets/fonts-DokjQgew.css",
+    "src": "_fonts-DokjQgew.css"
+  },
+  "_red-hat-mono-500-normal-C00uZsq5.woff": {
+    "file": "assets/red-hat-mono-500-normal-C00uZsq5.woff",
+    "src": "_red-hat-mono-500-normal-C00uZsq5.woff"
+  },
+  "_red-hat-mono-500-normal-CjZS5o_4.woff2": {
+    "file": "assets/red-hat-mono-500-normal-CjZS5o_4.woff2",
+    "src": "_red-hat-mono-500-normal-CjZS5o_4.woff2"
+  },
+  "_red-hat-text-400-normal-B-8bUVwG.woff": {
+    "file": "assets/red-hat-text-400-normal-B-8bUVwG.woff",
+    "src": "_red-hat-text-400-normal-B-8bUVwG.woff"
+  },
+  "_red-hat-text-400-normal-CU14VBGs.woff2": {
+    "file": "assets/red-hat-text-400-normal-CU14VBGs.woff2",
+    "src": "_red-hat-text-400-normal-CU14VBGs.woff2"
+  },
+  "_red-hat-text-500-normal-BVSYZAnq.woff": {
+    "file": "assets/red-hat-text-500-normal-BVSYZAnq.woff",
+    "src": "_red-hat-text-500-normal-BVSYZAnq.woff"
+  },
+  "_red-hat-text-500-normal-c4wcFpAd.woff2": {
+    "file": "assets/red-hat-text-500-normal-c4wcFpAd.woff2",
+    "src": "_red-hat-text-500-normal-c4wcFpAd.woff2"
+  },
+  "_red-hat-text-700-normal-BH-DziDI.woff": {
+    "file": "assets/red-hat-text-700-normal-BH-DziDI.woff",
+    "src": "_red-hat-text-700-normal-BH-DziDI.woff"
+  },
+  "_red-hat-text-700-normal-CUTLKMGb.woff2": {
+    "file": "assets/red-hat-text-700-normal-CUTLKMGb.woff2",
+    "src": "_red-hat-text-700-normal-CUTLKMGb.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-B38t20Gk.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-PzQMLpz_.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}

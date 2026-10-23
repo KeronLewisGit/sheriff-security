@@ -1,0 +1,192 @@
+{
+  "version": 1,
+  "style": {
+    "file": "assets/fonts-DokjQgew.css",
+    "familyStyles": {
+      "display": "@font-face {\n  font-family: \"Chakra Petch\";\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"/build/assets/chakra-petch-500-normal-BR1ody1F.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n@font-face {\n  font-family: \"Chakra Petch\";\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"/build/assets/chakra-petch-500-normal-CnUQnZ4D.woff\") format(\"woff\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n@font-face {\n  font-family: \"Chakra Petch\";\n  font-style: normal;\n  font-weight: 600;\n  font-display: swap;\n  src: url(\"/build/assets/chakra-petch-600-normal-DVQm9bgb.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n@font-face {\n  font-family: \"Chakra Petch\";\n  font-style: normal;\n  font-weight: 600;\n  font-display: swap;\n  src: url(\"/build/assets/chakra-petch-600-normal-DQKfcdKo.woff\") format(\"woff\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n@font-face {\n  font-family: \"Chakra Petch\";\n  font-style: normal;\n  font-weight: 700;\n  font-display: swap;\n  src: url(\"/build/assets/chakra-petch-700-normal-CnDBPjkL.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n@font-face {\n  font-family: \"Chakra Petch\";\n  font-style: normal;\n  font-weight: 700;\n  font-display: swap;\n  src: url(\"/build/assets/chakra-petch-700-normal-D1s_c2du.woff\") format(\"woff\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n.ff-display {\n  font-family: var(--ff-display);\n}",
+      "sans": "@font-face {\n  font-family: \"Red Hat Text\";\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"/build/assets/red-hat-text-400-normal-CU14VBGs.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n@font-face {\n  font-family: \"Red Hat Text\";\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"/build/assets/red-hat-text-400-normal-B-8bUVwG.woff\") format(\"woff\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n@font-face {\n  font-family: \"Red Hat Text\";\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"/build/assets/red-hat-text-500-normal-c4wcFpAd.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n@font-face {\n  font-family: \"Red Hat Text\";\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"/build/assets/red-hat-text-500-normal-BVSYZAnq.woff\") format(\"woff\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n@font-face {\n  font-family: \"Red Hat Text\";\n  font-style: normal;\n  font-weight: 700;\n  font-display: swap;\n  src: url(\"/build/assets/red-hat-text-700-normal-CUTLKMGb.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n@font-face {\n  font-family: \"Red Hat Text\";\n  font-style: normal;\n  font-weight: 700;\n  font-display: swap;\n  src: url(\"/build/assets/red-hat-text-700-normal-BH-DziDI.woff\") format(\"woff\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n.ff-sans {\n  font-family: var(--ff-sans);\n}",
+      "mono": "@font-face {\n  font-family: \"Red Hat Mono\";\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"/build/assets/red-hat-mono-500-normal-CjZS5o_4.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n@font-face {\n  font-family: \"Red Hat Mono\";\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"/build/assets/red-hat-mono-500-normal-C00uZsq5.woff\") format(\"woff\");\n  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;\n}\n\n.ff-mono {\n  font-family: var(--ff-mono);\n}"
+    },
+    "variables": {
+      "display": "--ff-display: \"Chakra Petch\", ui-sans-serif, system-ui, sans-serif;",
+      "sans": "--ff-sans: \"Red Hat Text\", ui-sans-serif, system-ui, sans-serif;",
+      "mono": "--ff-mono: \"Red Hat Mono\", ui-monospace, SFMono-Regular, Menlo, monospace;"
+    }
+  },
+  "preloads": [
+    {
+      "alias": "display",
+      "family": "Chakra Petch",
+      "weight": 700,
+      "style": "normal",
+      "file": "assets/chakra-petch-700-normal-CnDBPjkL.woff2",
+      "as": "font",
+      "type": "font/woff2",
+      "crossorigin": "anonymous"
+    },
+    {
+      "alias": "sans",
+      "family": "Red Hat Text",
+      "weight": 400,
+      "style": "normal",
+      "file": "assets/red-hat-text-400-normal-CU14VBGs.woff2",
+      "as": "font",
+      "type": "font/woff2",
+      "crossorigin": "anonymous"
+    },
+    {
+      "alias": "sans",
+      "family": "Red Hat Text",
+      "weight": 700,
+      "style": "normal",
+      "file": "assets/red-hat-text-700-normal-CUTLKMGb.woff2",
+      "as": "font",
+      "type": "font/woff2",
+      "crossorigin": "anonymous"
+    },
+    {
+      "alias": "mono",
+      "family": "Red Hat Mono",
+      "weight": 500,
+      "style": "normal",
+      "file": "assets/red-hat-mono-500-normal-CjZS5o_4.woff2",
+      "as": "font",
+      "type": "font/woff2",
+      "crossorigin": "anonymous"
+    }
+  ],
+  "families": {
+    "display": {
+      "family": "Chakra Petch",
+      "variable": "--ff-display",
+      "fallbacks": [
+        "ui-sans-serif",
+        "system-ui",
+        "sans-serif"
+      ],
+      "variants": {
+        "500:normal": {
+          "files": [
+            {
+              "file": "assets/chakra-petch-500-normal-BR1ody1F.woff2",
+              "format": "woff2",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            },
+            {
+              "file": "assets/chakra-petch-500-normal-CnUQnZ4D.woff",
+              "format": "woff",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            }
+          ]
+        },
+        "600:normal": {
+          "files": [
+            {
+              "file": "assets/chakra-petch-600-normal-DVQm9bgb.woff2",
+              "format": "woff2",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            },
+            {
+              "file": "assets/chakra-petch-600-normal-DQKfcdKo.woff",
+              "format": "woff",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            }
+          ]
+        },
+        "700:normal": {
+          "files": [
+            {
+              "file": "assets/chakra-petch-700-normal-CnDBPjkL.woff2",
+              "format": "woff2",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            },
+            {
+              "file": "assets/chakra-petch-700-normal-D1s_c2du.woff",
+              "format": "woff",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            }
+          ]
+        }
+      }
+    },
+    "sans": {
+      "family": "Red Hat Text",
+      "variable": "--ff-sans",
+      "fallbacks": [
+        "ui-sans-serif",
+        "system-ui",
+        "sans-serif"
+      ],
+      "variants": {
+        "400:normal": {
+          "files": [
+            {
+              "file": "assets/red-hat-text-400-normal-CU14VBGs.woff2",
+              "format": "woff2",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            },
+            {
+              "file": "assets/red-hat-text-400-normal-B-8bUVwG.woff",
+              "format": "woff",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            }
+          ]
+        },
+        "500:normal": {
+          "files": [
+            {
+              "file": "assets/red-hat-text-500-normal-c4wcFpAd.woff2",
+              "format": "woff2",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            },
+            {
+              "file": "assets/red-hat-text-500-normal-BVSYZAnq.woff",
+              "format": "woff",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            }
+          ]
+        },
+        "700:normal": {
+          "files": [
+            {
+              "file": "assets/red-hat-text-700-normal-CUTLKMGb.woff2",
+              "format": "woff2",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            },
+            {
+              "file": "assets/red-hat-text-700-normal-BH-DziDI.woff",
+              "format": "woff",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            }
+          ]
+        }
+      }
+    },
+    "mono": {
+      "family": "Red Hat Mono",
+      "variable": "--ff-mono",
+      "fallbacks": [
+        "ui-monospace",
+        "SFMono-Regular",
+        "Menlo",
+        "monospace"
+      ],
+      "variants": {
+        "500:normal": {
+          "files": [
+            {
+              "file": "assets/red-hat-mono-500-normal-CjZS5o_4.woff2",
+              "format": "woff2",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            },
+            {
+              "file": "assets/red-hat-mono-500-normal-C00uZsq5.woff",
+              "format": "woff",
+              "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

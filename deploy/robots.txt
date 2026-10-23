@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin
+Disallow: /login
+Disallow: /vendor-pack/
+Sitemap: https://www.sheriffguyana.com/sitemap.xml
