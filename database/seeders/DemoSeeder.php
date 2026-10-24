@@ -35,6 +35,17 @@ use Illuminate\Support\Facades\Storage;
  */
 class DemoSeeder extends Seeder
 {
+    /** Demo alarm sites and fault descriptions (fictional, Georgetown-style addresses). */
+    private const array TICKET_SITES = ['Demo shop, Regent Street, Georgetown', 'Demo residence, Bel Air Park, Georgetown', 'Demo office, Camp Street, Georgetown', 'Demo warehouse, Eccles, East Bank Demerara', 'Demo residence, Prashad Nagar, Georgetown'];
+
+    private const array TICKET_NOTES = [
+        'The keypad shows "comms fail" and the command centre says it has had no signal from the panel since last night.',
+        'The alarm has gone off three nights in a row around 2 am. Nobody was on the premises; zone 4 (back door) shows on the keypad.',
+        'Keypad beeps every minute and shows a low-battery warning after the power cut on Monday.',
+        'We are extending the warehouse and need two extra motion sensors and a siren on the new loading bay.',
+        'Two keys on the keypad stopped working, so we cannot arm the system at night.',
+    ];
+
     public function run(): void
     {
         $admin = User::firstOrCreate(['email' => 'admin@sheriff.test'], ['name' => 'Demo Admin', 'password' => Hash::make('password'), 'role' => 'admin']);
@@ -207,7 +218,11 @@ class DemoSeeder extends Seeder
         ];
         foreach ($rows as $i => [$issue, $urgent, $status, $hours, $note]) {
             $at = now()->subHours($hours);
-            $t = ServiceTicket::factory()->create(['issue' => $issue, 'urgent' => $urgent, 'name' => ['Rohan Mohamed', 'Celina Fung', 'Dwayne Rodney', 'Anita Narine', 'Paul Grant'][$i], 'email' => 'customer'.($i + 1).'@example.com', 'created_at' => $at, 'updated_at' => $at]);
+            $t = ServiceTicket::factory()->create([
+                'issue' => $issue, 'urgent' => $urgent, 'name' => ['Rohan Mohamed', 'Celina Fung', 'Dwayne Rodney', 'Anita Narine', 'Paul Grant'][$i],
+                'email' => 'customer'.($i + 1).'@example.com', 'site_address' => self::TICKET_SITES[$i], 'description' => self::TICKET_NOTES[$i],
+                'created_at' => $at, 'updated_at' => $at,
+            ]);
             $t->moveTo($status);
             $t->public_note = $note;
             $t->visit_on = $status === TicketStatus::Scheduled ? Carbon::tomorrow() : null;
