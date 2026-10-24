@@ -170,21 +170,59 @@ function caption(key, i, c) {
   return text ? `<figcaption class="cap"><b>${esc(n)}</b>${esc(text)}</figcaption>` : '';
 }
 
-function screenPages(sec, [key, title, bullets]) {
+/**
+ * Each screenshot slice becomes a flowable item; pack() (run in the page before printing) lays the
+ * items onto letter pages by measured height, so a short slice shares a page instead of sitting alone.
+ */
+function screenItems(sec, [key, title, bullets]) {
   const c = chunks[key];
-  if (!c) return `<section class="page"><h2>${esc(title)}</h2><p class="muted">Screenshot missing: ${esc(key)}</p></section>`;
+  if (!c) return `<div class="item" data-title="${esc(title)}" data-url="" data-first="1"><p class="muted">Screenshot missing: ${esc(key)}</p></div>`;
   return c.chunks.map((file, i) => `
-    <section class="page shot">
-      <header class="shot-head">
-        <div><p class="ptw"><b>${esc(sec.eyebrow)}</b>${esc(sec.title)}${i ? ' · continued' : ''}</p><h2>${esc(title)}</h2></div>
-        <p class="url">${esc(c.url)}</p>
-      </header>
-      ${i === 0 ? `<ul class="bullets">${bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+    <div class="item" data-title="${esc(title)}" data-url="${esc(c.url)}" data-first="${i === 0 ? 1 : 0}">
+      ${i === 0 ? `<div class="mini"><h3>${esc(title)}</h3><p class="url">${esc(c.url)}</p></div><ul class="bullets">${bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
       <figure class="${i === 0 ? `b${Math.min(bullets.length, 3)}` : ''}"><img src="${img(file)}" alt="${esc(title)}">${caption(key, i, c)}</figure>
-      ${foot()}
-    </section>`).join('');
+    </div>`).join('');
 }
 
+/* Runs inside the page. Pages are 7.4in × 10in content boxes (Letter minus the @page margins). */
+function pack() {
+  const MIN_SCALE = 0.85, SHORT = 0.3, EMPTY = 0.4;
+  for (const src of document.querySelectorAll('.flow-src')) {
+    const tpl = src.querySelector('template.page-tpl').content;
+    let body = null, scale = 1;
+    const fits = () => used() <= body.clientHeight - 3;
+    const used = () => { const last = body.lastElementChild; return last ? last.getBoundingClientRect().bottom - body.getBoundingClientRect().top : 0; };
+    const setScale = (s) => { for (const i of body.querySelectorAll('img')) i.style.width = `${i.dataset.w0 * s}px`; };
+    const place = (it) => { body.append(it); for (const i of it.querySelectorAll('img')) { i.style.width = ''; i.dataset.w0 = i.getBoundingClientRect().width; i.style.width = `${i.dataset.w0 * scale}px`; } };
+    const newPage = (it) => {
+      const pg = tpl.cloneNode(true).firstElementChild;
+      const first = it.dataset.first === '1';
+      pg.querySelector('.cont').hidden = first;
+      pg.querySelector('h2').textContent = it.dataset.title;
+      pg.querySelector('.shot-head .url').textContent = it.dataset.url;
+      src.before(pg);
+      body = pg.querySelector('.pbody'); scale = 1;
+      it.querySelector('.mini')?.remove();
+      place(it);
+    };
+    for (const it of [...src.querySelectorAll('.item')]) {
+      if (!body) { newPage(it); continue; }
+      const before = used();
+      place(it);
+      if (fits()) continue;
+      const room = body.clientHeight;
+      const itemH = it.getBoundingClientRect().height;
+      let ok = false;
+      if (itemH < room * SHORT || before < room * (1 - EMPTY)) {
+        for (let s = Math.round(scale * 100) - 1; s >= MIN_SCALE * 100; s--) { setScale(s / 100); if (fits()) { scale = s / 100; ok = true; break; } }
+      }
+      if (ok) continue;
+      it.remove(); setScale(scale);
+      newPage(it);
+    }
+    src.remove();
+  }
+}
 const foot = () => `<footer class="foot"><span class="fl">${LOGO(18, 'on-light')}Sheriff Security Services · Website proposal</span><span>Code Canvas Consultants Ltd · ${esc(DATE)}</span></footer>`;
 const phone = (k, label) => `<figure><img src="${img(sub(chunks[k])[0])}" alt="${esc(label)}"><figcaption>${esc(label)}</figcaption></figure>`;
 const tile = (k, i, label) => `<figure class="tile"><img src="${img(sub(chunks[k])[i])}" alt="${esc(label)}"><figcaption>${esc(label)}</figcaption></figure>`;
@@ -241,6 +279,9 @@ ${FONTS}
   figure { margin: 0; display: block; }
   .shot figure img { display: block; max-width: 100%; max-height: 7.75in; margin: 0 auto; border: 1px solid var(--line); border-radius: 3px; }
   .shot figure.b1 img { max-height: 7.45in; } .shot figure.b2 img { max-height: 7.2in; } .shot figure.b3 img { max-height: 6.95in; }
+  .pbody { flex: 1 1 auto; min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 16px; }
+  .item { flex: none; } .item .mini { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; border-top: 1px solid var(--line); padding-top: 8px; margin-bottom: 5px; } .item .mini h3 { font-size: 13pt; }
+  .flow-src { display: none; }
   .cap { margin: 7px 0 0; font-size: 8.8pt; line-height: 1.38; color: var(--ink-2); border-left: 3px solid var(--blue); padding-left: 9px; }
   .cap b { font-family: "Red Hat Mono"; font-weight: 500; color: var(--link); font-size: 8pt; }
   .phones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 14px 0.15in 0; } .phones img { display: block; width: 100%; height: auto; border-radius: 22px; border: 7px solid var(--brand-950); } .phones figcaption { text-align: center; font-size: 9pt; color: var(--ink-2); margin-top: 6px; font-weight: 500; }
@@ -347,7 +388,14 @@ ${SECTIONS.map((sec) => `
   <p>${esc(sec.intro)}</p>
   <ol>${sec.screens.map((s) => `<li>${esc(s[1])}</li>`).join('')}</ol>
 </section>
-${sec.screens.map((s) => screenPages(sec, s)).join('')}
+<div class="flow-src">
+  <template class="page-tpl"><section class="page shot">
+    <header class="shot-head"><div><p class="ptw"><b>${esc(sec.eyebrow)}</b>${esc(sec.title)}<span class="cont"> · continued</span></p><h2></h2></div><p class="url"></p></header>
+    <div class="pbody"></div>
+    ${foot()}
+  </section></template>
+  ${sec.screens.map((s) => screenItems(sec, s)).join('')}
+</div>
 `).join('')}
 
 <section class="page">
@@ -444,6 +492,12 @@ const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new'
 const page = await browser.newPage();
 await page.goto('file://' + OUT_HTML, { waitUntil: 'networkidle0' });
 await page.evaluate(() => document.fonts.ready);
+// Lay out on screen at the printed content width (7.4in) so measured heights match the PDF.
+await page.setViewport({ width: 710, height: 960 });
+await page.emulateMediaType('print');
+await page.evaluate(() => Promise.all([...document.images].map((i) => i.decode().catch(() => {}))));
+await page.evaluate(`(${pack.toString()})()`);
+fs.writeFileSync(OUT_HTML.replace(/\.html$/, '.packed.html'), await page.content());
 await page.pdf({ path: OUT_PDF, format: 'Letter', printBackground: true, preferCSSPageSize: true, displayHeaderFooter: false });
 await browser.close();
 console.log('PDF written:', OUT_PDF, Math.round(fs.statSync(OUT_PDF).size / 1024 / 1024 * 10) / 10 + ' MB');
