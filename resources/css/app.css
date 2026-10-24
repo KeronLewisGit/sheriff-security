@@ -2,6 +2,8 @@
 
 @source '../views';
 @source '../js';
+/* The proposal generator's print styles are not site markup. */
+@source not '../../scripts';
 
 /* dark: follows the toggle when set, otherwise the operating system. */
 @custom-variant dark {
