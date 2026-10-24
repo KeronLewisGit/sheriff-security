@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 final class Slug
 {
     /**
-     * A slug for $title that no row of $model uses yet: "grade-checker", then "grade-checker-2".
+     * A slug for $title that no row of $model uses yet: "security-officer", then "security-officer-2".
      *
      * @param  class-string<Model>  $model
      */

@@ -17,7 +17,7 @@ rsync -a --delete \
   --exclude '.git' --exclude 'node_modules' --exclude 'tests' --exclude 'dist' --exclude 'deploy' --exclude 'scripts' \
   --exclude '/public' --exclude '/vendor' --exclude '.env' --exclude 'database/database.sqlite' \
   --exclude 'storage/logs/*' --exclude 'storage/framework/cache/data/*' --exclude 'storage/framework/sessions/*' \
-  --exclude 'storage/framework/views/*' --exclude 'storage/app/private/*' --exclude 'storage/app/public/*' --exclude 'bootstrap/cache/*' \
+  --exclude 'storage/framework/views/*' --exclude 'storage/framework/testing' --exclude 'storage/app/private/*' --exclude 'storage/app/public/*' --exclude 'bootstrap/cache/*' \
   --exclude '.phpunit*' --exclude 'phpunit.xml' --exclude 'boost.json' --exclude 'AGENTS.md' --exclude 'CLAUDE.md' --exclude 'README.md' \
   "$ROOT/" "$APP/"
 
@@ -25,7 +25,7 @@ echo "→ Installing production PHP dependencies (PHP 8.3 compatible)"
 cp "$ROOT/composer.json" "$ROOT/composer.lock" "$APP/"
 ( cd "$APP" && composer install --no-dev --optimize-autoloader --no-interaction --quiet --ignore-platform-req=php )
 
-mkdir -p "$APP/storage/framework/"{cache/data,sessions,views,testing} "$APP/storage/logs" "$APP/storage/app/public" "$APP/storage/app/private/applications" "$APP/storage/app/private/proposals" "$APP/storage/app/private/compliance" "$APP/bootstrap/cache"
+mkdir -p "$APP/storage/framework/"{cache/data,sessions,views} "$APP/storage/logs" "$APP/storage/app/public" "$APP/storage/app/private/applications" "$APP/storage/app/private/proposals" "$APP/storage/app/private/compliance" "$APP/bootstrap/cache"
 touch "$APP/storage/logs/.gitkeep"
 cp "$ROOT/deploy/env.production.example" "$APP/.env.example"
 cp "$ROOT/deploy/app.htaccess" "$APP/.htaccess"
@@ -33,10 +33,6 @@ cp "$ROOT/deploy/app.htaccess" "$APP/.htaccess"
 echo "→ Staging public files"
 cp -R "$ROOT/public/build" "$STAGE/build"
 cp -R "$ROOT/public/img" "$STAGE/img"
-# Reserved for public uploads. PHP never runs from it. (Applicant, proposal and compliance files stay private in sheriff-app/storage.)
-mkdir -p "$STAGE/uploads"
-cp "$ROOT/deploy/uploads.htaccess" "$STAGE/uploads/.htaccess"
-
 cp "$ROOT/public/favicon.svg" "$STAGE/favicon.svg"
 cp "$ROOT/deploy/index.php" "$STAGE/index.php"
 cp "$ROOT/deploy/.htaccess" "$STAGE/.htaccess"

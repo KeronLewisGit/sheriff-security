@@ -18,7 +18,8 @@
         </div>
     </section>
 
-    <section class="wrap mt-10" x-data="{ tab: '{{ $tab === 'status' || $errors->has('reference') ? 'status' : 'report' }}' }">
+    @php($lookup = $tab === 'status' || $errors->hasAny(['reference', 'lookup_email']))
+    <section class="wrap mt-10" x-data="{ tab: '{{ $lookup ? 'status' : 'report' }}' }">
         {{-- Without JavaScript both panels show one after the other; with it they become tabs. --}}
         <div class="hidden gap-2 border-b border-line [.js_&]:flex" role="tablist" aria-label="Alarm service">
             <button type="button" role="tab" class="-mb-px inline-flex min-h-12 items-center gap-2 border-b-[3px] px-4 font-bold" :class="tab === 'report' ? 'border-blue text-ink' : 'border-transparent text-ink-3'" :aria-selected="(tab === 'report').toString()" @click="tab = 'report'"><x-icon name="wrench" class="h-5 w-5" />Report a fault</button>
@@ -53,13 +54,13 @@
                     <button class="btn btn-blue">Log the ticket<x-icon name="arrow-right" class="nudge h-4 w-4" /></button>
                 </form>
 
-                <form id="status" method="POST" action="{{ route('alarm-service.lookup') }}" class="space-y-5" novalidate x-show="tab === 'status'" @if ($tab !== 'status' && ! $errors->has('reference')) x-cloak @endif>
+                <form id="status" method="POST" action="{{ route('alarm-service.lookup') }}" class="space-y-5" novalidate x-show="tab === 'status'" @unless ($lookup) x-cloak @endunless>
                     @csrf
                     <h2 class="display-3">Check ticket status</h2>
                     <p class="text-ink-2">Enter the ticket number from your confirmation email, with the email address you used.</p>
                     <div class="grid gap-5 sm:grid-cols-2">
                         <x-field name="reference" id="lookup-reference" label="Ticket number" class="[&_input]:font-mono [&_input]:uppercase" placeholder="SA-{{ now()->format('y') }}-00000" autocomplete="off" required />
-                        <x-field name="email" id="lookup-email" label="Email" type="email" autocomplete="email" required />
+                        <x-field name="lookup_email" id="lookup-email" label="Email" type="email" autocomplete="email" required />
                     </div>
                     <button class="btn btn-primary"><x-icon name="search" class="h-4 w-4" />Check status</button>
                 </form>

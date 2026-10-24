@@ -33,7 +33,7 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            // Résumés live here; they are only ever streamed to signed-in staff.
+            // Applicant, proposal and compliance documents: only ever streamed to signed-in staff or signed vendor links.
             'serve' => false,
             'throw' => false,
             'report' => false,
@@ -43,17 +43,6 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
-            'visibility' => 'public',
-            'throw' => false,
-            'report' => false,
-        ],
-
-        // Project photos uploaded in the admin. They sit inside the web root
-        // (public/ locally, public_html/ on Hostinger) so no storage symlink is needed.
-        'uploads' => [
-            'driver' => 'local',
-            'root' => public_path('uploads'),
-            'url' => '/uploads',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,

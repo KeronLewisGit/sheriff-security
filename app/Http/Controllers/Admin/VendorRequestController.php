@@ -35,7 +35,14 @@ class VendorRequestController extends Controller
 
     public function approve(Request $request, VendorRequest $vendorRequest): RedirectResponse
     {
-        abort_if($vendorRequest->documents()->whereNull('path')->exists() && ! $request->boolean('allow_missing'), 422, 'One of the requested documents has no file uploaded yet.');
+        // Only a pending request can be approved: a double click must not re-issue
+        // the token (which would kill the link already emailed) or send a second email.
+        if ($vendorRequest->status !== VendorStatus::Pending) {
+            return back()->withErrors(['decision' => "{$vendorRequest->reference} has already been decided."]);
+        }
+        if ($vendorRequest->documents()->whereNull('path')->exists() && ! $request->boolean('allow_missing')) {
+            return back()->withErrors(['decision' => 'One of the requested documents has no file uploaded yet. Tick “Send anyway” or upload it first.']);
+        }
         /** @var User $user */
         $user = $request->user();
         $days = max(1, min(30, (int) setting('vendor_link_days', '7')));
@@ -58,6 +65,9 @@ class VendorRequestController extends Controller
 
     public function decline(Request $request, VendorRequest $vendorRequest): RedirectResponse
     {
+        if ($vendorRequest->status !== VendorStatus::Pending) {
+            return back()->withErrors(['decision' => "{$vendorRequest->reference} has already been decided."]);
+        }
         $data = $request->validate(['decision_note' => ['nullable', 'string', 'max:255']]);
         /** @var User $user */
         $user = $request->user();
@@ -68,6 +78,9 @@ class VendorRequestController extends Controller
 
     public function revoke(VendorRequest $vendorRequest): RedirectResponse
     {
+        if ($vendorRequest->status !== VendorStatus::Approved) {
+            return back()->withErrors(['decision' => "{$vendorRequest->reference} has no link to withdraw."]);
+        }
         $vendorRequest->revoke();
 
         return back()->with('status', "Link for {$vendorRequest->reference} withdrawn. It stops working immediately.");

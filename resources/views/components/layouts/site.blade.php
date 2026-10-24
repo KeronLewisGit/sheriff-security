@@ -65,9 +65,9 @@
             <div class="wrap flex h-10 items-center gap-6 text-sm">
                 <p class="coord flex items-center gap-2 text-sky"><x-icon name="shield" class="h-4 w-4" />ISO 9001:2015 · ISO 45001:2018</p>
                 <nav class="ml-auto flex items-center gap-5 text-white/80" aria-label="Customer services">
-                    <a href="{{ route('vendor.create') }}" class="inline-flex min-h-10 items-center hover:text-white">Vendor prequalification pack</a>
-                    <a href="{{ route('alarm-service') }}" class="inline-flex min-h-10 items-center hover:text-white">Alarm service &amp; fault report</a>
-                    @if ($phone)<a href="{{ tel_href($phone) }}" class="inline-flex min-h-10 items-center gap-1.5 font-bold text-white"><x-icon name="phone" class="h-4 w-4" />{{ format_phone($phone) }}</a>@endif
+                    <a href="{{ route('vendor.create') }}" class="inline-flex min-h-11 items-center hover:text-white">Vendor prequalification pack</a>
+                    <a href="{{ route('alarm-service') }}" class="inline-flex min-h-11 items-center hover:text-white">Alarm service &amp; fault report</a>
+                    @if ($phone)<a href="{{ tel_href($phone) }}" class="inline-flex min-h-11 items-center gap-1.5 font-bold text-white"><x-icon name="phone" class="h-4 w-4" />{{ format_phone($phone) }}</a>@endif
                 </nav>
             </div>
         </div>
@@ -128,23 +128,23 @@
                 <h2 class="ptw text-white/60">Services</h2>
                 <ul class="mt-4 space-y-1">
                     @foreach (sheriff('services') as $slug => $s)
-                        <li><a class="inline-flex min-h-10 items-center hover:text-white" href="{{ route('services.show', $slug) }}">{{ $s['title'] }}</a></li>
+                        <li><a class="inline-flex min-h-11 items-center hover:text-white" href="{{ route('services.show', $slug) }}">{{ $s['title'] }}</a></li>
                     @endforeach
                 </ul>
             </div>
             <div>
                 <h2 class="ptw text-white/60">Procurement</h2>
                 <ul class="mt-4 space-y-1">
-                    <li><a class="inline-flex min-h-10 items-center hover:text-white" href="{{ route('rfp.create') }}">Request a proposal</a></li>
-                    <li><a class="inline-flex min-h-10 items-center hover:text-white" href="{{ route('vendor.create') }}">Vendor prequalification</a></li>
-                    <li><a class="inline-flex min-h-10 items-center hover:text-white" href="{{ route('hse') }}">HSE &amp; compliance</a></li>
-                    <li><a class="inline-flex min-h-10 items-center hover:text-white" href="{{ route('industries') }}">Industries</a></li>
+                    <li><a class="inline-flex min-h-11 items-center hover:text-white" href="{{ route('rfp.create') }}">Request a proposal</a></li>
+                    <li><a class="inline-flex min-h-11 items-center hover:text-white" href="{{ route('vendor.create') }}">Vendor prequalification</a></li>
+                    <li><a class="inline-flex min-h-11 items-center hover:text-white" href="{{ route('hse') }}">HSE &amp; compliance</a></li>
+                    <li><a class="inline-flex min-h-11 items-center hover:text-white" href="{{ route('industries') }}">Industries</a></li>
                 </ul>
                 <h2 class="ptw mt-6 text-white/60">Company</h2>
                 <ul class="mt-4 space-y-1">
-                    <li><a class="inline-flex min-h-10 items-center hover:text-white" href="{{ route('group') }}">Group companies</a></li>
-                    <li><a class="inline-flex min-h-10 items-center hover:text-white" href="{{ route('leadership') }}">Leadership</a></li>
-                    <li><a class="inline-flex min-h-10 items-center hover:text-white" href="{{ route('careers') }}">Careers</a></li>
+                    <li><a class="inline-flex min-h-11 items-center hover:text-white" href="{{ route('group') }}">Group companies</a></li>
+                    <li><a class="inline-flex min-h-11 items-center hover:text-white" href="{{ route('leadership') }}">Leadership</a></li>
+                    <li><a class="inline-flex min-h-11 items-center hover:text-white" href="{{ route('careers') }}">Careers</a></li>
                 </ul>
             </div>
             <div>
@@ -153,10 +153,10 @@
                     {{ setting('address_line') }}<br>{{ setting('address_city') }}, Guyana
                 </address>
                 @if (setting('office_hours'))<p class="mt-2 text-white/65">{{ setting('office_hours') }}</p>@endif
-                @if ($email)<p class="mt-3"><a class="inline-flex min-h-10 items-center break-all hover:text-white" href="mailto:{{ $email }}">{{ $email }}</a></p>@endif
+                @if ($email)<p class="mt-3"><a class="inline-flex min-h-11 items-center break-all hover:text-white" href="mailto:{{ $email }}">{{ $email }}</a></p>@endif
                 <p class="mt-3 flex flex-wrap gap-x-5 gap-y-1">
                     @foreach (['facebook' => 'Facebook', 'instagram' => 'Instagram', 'linkedin' => 'LinkedIn'] as $k => $label)
-                        @if (setting($k))<a class="inline-flex min-h-10 items-center gap-1 hover:text-white" href="{{ setting($k) }}" rel="noopener" target="_blank">{{ $label }}<x-icon name="external" class="h-3.5 w-3.5" /></a>@endif
+                        @if (setting($k))<a class="inline-flex min-h-11 items-center gap-1 hover:text-white" href="{{ setting($k) }}" rel="noopener" target="_blank">{{ $label }}<x-icon name="external" class="h-3.5 w-3.5" /></a>@endif
                     @endforeach
                 </p>
                 <p class="coord mt-5 text-white/55">06°48′N · 058°09′W</p>
@@ -166,10 +166,10 @@
             <div class="wrap flex flex-col gap-3 py-6 text-sm text-white/60 md:flex-row md:items-center md:justify-between">
                 <p>© {{ date('Y') }} {{ rtrim(sheriff('legal_name'), '.') }}. All rights reserved.</p>
                 <p class="flex flex-wrap gap-x-5 gap-y-1">
-                    <a class="inline-flex min-h-10 items-center hover:text-white" href="{{ route('privacy') }}">Privacy</a>
-                    <a class="inline-flex min-h-10 items-center hover:text-white" href="{{ route('credits') }}">Photo credits</a>
-                    <a class="inline-flex min-h-10 items-center hover:text-white" href="{{ route('sitemap') }}">Sitemap</a>
-                    <a class="inline-flex min-h-10 items-center hover:text-white" href="{{ route('login') }}">Staff sign-in</a>
+                    <a class="inline-flex min-h-11 items-center hover:text-white" href="{{ route('privacy') }}">Privacy</a>
+                    <a class="inline-flex min-h-11 items-center hover:text-white" href="{{ route('credits') }}">Photo credits</a>
+                    <a class="inline-flex min-h-11 items-center hover:text-white" href="{{ route('sitemap') }}">Sitemap</a>
+                    <a class="inline-flex min-h-11 items-center hover:text-white" href="{{ route('login') }}">Staff sign-in</a>
                 </p>
             </div>
         </div>

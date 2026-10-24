@@ -56,6 +56,7 @@ class ProposalController extends Controller
             'phone.regex' => 'Enter a phone number we can call.',
             'documents.*.max' => 'Each document must be 10 MB or smaller.',
             'documents.*.mimes' => 'Documents can be PDF, Word, Excel, images or a ZIP.',
+            'documents.max' => 'Attach up to 5 documents.',
             'posts.min' => 'Enter at least one post.',
         ]);
 

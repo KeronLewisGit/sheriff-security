@@ -2,7 +2,7 @@
 <x-layouts.admin :title="'Vendor pack · '.$vr->company">
     <x-slot:actions><a href="{{ route('admin.vendor.index') }}" class="a-btn a-btn-ghost"><x-icon name="arrow-left" class="h-4 w-4" />All requests</a></x-slot:actions>
     <div class="grid gap-5 xl:grid-cols-[1.4fr_1fr]">
-        <div class="space-y-5">
+        <div class="min-w-0 space-y-5">
             <section class="a-card p-5">
                 <p class="flex flex-wrap items-center gap-2"><span class="ref text-ink-3">{{ $vr->reference }}</span><x-status :status="$vr->status" /></p>
                 <dl class="dl mt-5">
@@ -44,7 +44,7 @@
             </section>
         </div>
 
-        <aside class="space-y-5">
+        <aside class="min-w-0 space-y-5">
             @if ($vr->status === VendorStatus::Pending)
                 <form method="POST" action="{{ route('admin.vendor.approve', $vr) }}" class="a-card space-y-3 p-5">
                     @csrf

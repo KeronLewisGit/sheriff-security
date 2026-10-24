@@ -276,8 +276,6 @@
     .btn-on-dark:hover { border-color: #fff; background: rgb(255 255 255 / 0.08); }
     .btn-light { background: #fff; color: var(--brand-900); }
     .btn-light:hover { background: var(--blue-soft); }
-    .btn-hivis { background: var(--hivis); color: var(--hivis-ink); }
-    .btn-hivis:hover { background: #ff8133; }
     .btn-sm { min-height: 2.75rem; padding: 0.5rem 1rem; font-size: 0.9375rem; }
 
     .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }

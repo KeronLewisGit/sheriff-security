@@ -17,7 +17,6 @@ return [
 
     'name' => 'Sheriff Security Services',
     'legal_name' => 'Sheriff Security Inc.',
-    'short_name' => 'Sheriff Security',
     'group_name' => 'Sheriff Guyana',
     'founded' => 2015,
 

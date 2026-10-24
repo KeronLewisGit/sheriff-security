@@ -179,8 +179,40 @@ class VendorPackTest extends TestCase
         $vr->documents()->sync([$empty->id]);
         $bd = User::factory()->create(['role' => 'bd']);
 
-        $this->actingAs($bd)->post("/admin/vendor-requests/{$vr->id}/approve")->assertStatus(422);
-        $this->actingAs($bd)->post("/admin/vendor-requests/{$vr->id}/approve", ['allow_missing' => 1])->assertRedirect();
+        $this->actingAs($bd)->post("/admin/vendor-requests/{$vr->id}/approve")->assertRedirect()->assertSessionHasErrors('decision');
+        $this->assertSame(VendorStatus::Pending, $vr->fresh()->status);
+        $this->actingAs($bd)->post("/admin/vendor-requests/{$vr->id}/approve", ['allow_missing' => 1])->assertRedirect()->assertSessionHasNoErrors();
+    }
+
+    public function test_a_second_approve_keeps_the_emailed_link_working(): void
+    {
+        Notification::fake();
+        $vr = VendorRequest::factory()->create();
+        $vr->documents()->sync([$this->iso->id]);
+        $bd = User::factory()->create(['role' => 'bd']);
+
+        $this->actingAs($bd)->post("/admin/vendor-requests/{$vr->id}/approve")->assertSessionHasNoErrors();
+        $link = $vr->fresh()->packUrl();
+        $this->actingAs($bd)->post("/admin/vendor-requests/{$vr->id}/approve")->assertSessionHasErrors('decision');
+
+        $this->get((string) $link)->assertOk();
+        Notification::assertSentTimes(VisitorNotice::class, 1);
+    }
+
+    public function test_decided_requests_cannot_change_state_again(): void
+    {
+        $bd = User::factory()->create(['role' => 'bd']);
+        $declined = VendorRequest::factory()->create();
+        $declined->decline($bd, null);
+
+        $this->actingAs($bd)->post("/admin/vendor-requests/{$declined->id}/approve")->assertSessionHasErrors('decision');
+        $this->actingAs($bd)->post("/admin/vendor-requests/{$declined->id}/revoke")->assertSessionHasErrors('decision');
+        $this->assertSame(VendorStatus::Declined, $declined->fresh()->status);
+
+        $approved = $this->approved();
+        $approved->revoke();
+        $this->actingAs($bd)->post("/admin/vendor-requests/{$approved->id}/decline")->assertSessionHasErrors('decision');
+        $this->assertSame(VendorStatus::Revoked, $approved->fresh()->status);
     }
 
     public function test_compliance_files_are_private_and_uploadable_by_sales(): void

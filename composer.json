@@ -1,11 +1,12 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "codecanvas/sheriff-security",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Sheriff Security Services website, procurement desk, recruitment and staff dashboard.",
     "keywords": [
         "laravel",
-        "framework"
+        "security",
+        "guyana"
     ],
     "license": "MIT",
     "require": {

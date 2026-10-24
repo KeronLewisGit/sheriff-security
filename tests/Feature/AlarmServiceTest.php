@@ -33,21 +33,32 @@ class AlarmServiceTest extends TestCase
     {
         $t = ServiceTicket::factory()->create(['email' => 'paul@example.com', 'public_note' => 'Technician booked', 'staff_notes' => 'Customer was rude']);
 
-        $this->post('/alarm-service/status', ['reference' => strtolower($t->reference), 'email' => 'PAUL@example.com'])
+        $this->post('/alarm-service/status', ['reference' => strtolower($t->reference), 'lookup_email' => 'PAUL@example.com'])
             ->assertOk()->assertSee($t->reference)->assertSee('Technician booked')->assertDontSee('Customer was rude');
 
-        $this->post('/alarm-service/status', ['reference' => $t->reference, 'email' => 'someone@example.com'])
+        $this->post('/alarm-service/status', ['reference' => $t->reference, 'lookup_email' => 'someone@example.com'])
             ->assertRedirect()->assertSessionHasErrors(['reference' => 'We could not find a ticket with that number and email address.']);
-        $this->post('/alarm-service/status', ['reference' => 'SA-26-99999', 'email' => 'paul@example.com'])
+        $this->post('/alarm-service/status', ['reference' => 'SA-26-99999', 'lookup_email' => 'paul@example.com'])
             ->assertSessionHasErrors('reference');
+    }
+
+    public function test_a_bad_lookup_email_reopens_the_status_tab_only(): void
+    {
+        $html = $this->from('/alarm-service')->followingRedirects()
+            ->post('/alarm-service/status', ['reference' => 'SA-26-00001', 'lookup_email' => 'not-an-email'])
+            ->assertOk()->getContent();
+
+        $this->assertStringContainsString("tab: 'status'", $html);
+        $this->assertSame(1, substr_count($html, 'The email field must be a valid email address.'));
+        $this->assertSame(1, substr_count($html, 'value="not-an-email"'));
     }
 
     public function test_lookups_are_rate_limited(): void
     {
         for ($i = 0; $i < 10; $i++) {
-            $this->post('/alarm-service/status', ['reference' => 'SA-26-0000'.$i, 'email' => 'x@example.com']);
+            $this->post('/alarm-service/status', ['reference' => 'SA-26-0000'.$i, 'lookup_email' => 'x@example.com']);
         }
-        $this->post('/alarm-service/status', ['reference' => 'SA-26-00011', 'email' => 'x@example.com'])->assertStatus(429);
+        $this->post('/alarm-service/status', ['reference' => 'SA-26-00011', 'lookup_email' => 'x@example.com'])->assertStatus(429);
     }
 
     public function test_staff_updates_show_up_on_the_customer_lookup(): void
@@ -59,7 +70,7 @@ class AlarmServiceTest extends TestCase
         $this->assertSame(TicketStatus::Scheduled, $t->fresh()->status);
 
         auth()->logout();
-        $this->post('/alarm-service/status', ['reference' => $t->reference, 'email' => 'c@example.com'])
+        $this->post('/alarm-service/status', ['reference' => $t->reference, 'lookup_email' => 'c@example.com'])
             ->assertSee('Technician scheduled')->assertSee('Visit booked for 9 am');
 
         $this->actingAs($bd)->patch('/admin/alarm-tickets/'.$t->id, ['status' => 'resolved']);

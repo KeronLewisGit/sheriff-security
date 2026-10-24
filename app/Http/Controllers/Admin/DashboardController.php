@@ -15,8 +15,10 @@ use App\Models\ServiceTicket;
 use App\Models\User;
 use App\Models\VendorRequest;
 use App\Support\Notify;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 /**
@@ -36,10 +38,14 @@ class DashboardController extends Controller
 
         if ($sales) {
             $overdue = ProposalRequest::overdue()->orderBy('created_at')->get();
-            $weeks = collect(range(7, 0))->map(function (int $w) {
+            // Last eight weeks in one query, bucketed in PHP (works the same on SQLite and MySQL).
+            $first = now()->startOfWeek()->subWeeks(7);
+            $created = ProposalRequest::where('created_at', '>=', $first)->pluck('created_at')
+                ->countBy(fn ($at) => Carbon::parse($at)->startOfWeek()->toDateString());
+            $weeks = collect(range(7, 0))->map(function (int $w) use ($created) {
                 $start = now()->startOfWeek()->subWeeks($w);
 
-                return ['start' => $start, 'count' => ProposalRequest::whereBetween('created_at', [$start, $start->copy()->endOfWeek()])->count()];
+                return ['start' => $start, 'count' => (int) ($created[$start->toDateString()] ?? 0)];
             });
             $answered = ProposalRequest::whereNotNull('responded_at')->where('created_at', '>=', now()->subDays(90))->get(['created_at', 'responded_at']);
             $within = $answered->filter(fn (ProposalRequest $p) => $p->responded_at !== null && $p->created_at->diffInHours($p->responded_at) <= ProposalRequest::responseHours())->count();
@@ -48,7 +54,7 @@ class DashboardController extends Controller
                 'overdue' => $overdue,
                 'responseHours' => ProposalRequest::responseHours(),
                 'newProposals' => ProposalRequest::where('status', ProposalStatus::New)->count(),
-                'pipeline' => collect(ProposalStatus::cases())->map(fn (ProposalStatus $s) => ['status' => $s, 'count' => ProposalRequest::where('status', $s)->count()]),
+                'pipeline' => self::byStatus(ProposalRequest::class, ProposalStatus::cases()),
                 'weeks' => $weeks,
                 'weeksMax' => max(1, (int) $weeks->max('count')),
                 'onTimeRate' => $answered->count() ? (int) round($within / $answered->count() * 100) : null,
@@ -69,12 +75,28 @@ class DashboardController extends Controller
                 'staleApplications' => $stale->count(),
                 'oldestStale' => $oldest ? Carbon::parse($oldest) : null,
                 'newApplications' => JobApplication::where('status', ApplicationStatus::New)->count(),
-                'hiringPipeline' => collect(ApplicationStatus::cases())->map(fn (ApplicationStatus $s) => ['status' => $s, 'count' => JobApplication::where('status', $s)->count()]),
+                'hiringPipeline' => self::byStatus(JobApplication::class, ApplicationStatus::cases()),
                 'openJobs' => JobPosting::open()->count(),
                 'recentApplications' => JobApplication::with('jobPosting')->latest()->limit(6)->get(),
             ];
         }
 
         return view('admin.dashboard', $data);
+    }
+
+    /**
+     * Rows per status from one grouped query, in the enum's order (zero rows included).
+     *
+     * @template TStatus of \BackedEnum
+     *
+     * @param  class-string<Model>  $model
+     * @param  array<int, TStatus>  $cases
+     * @return Collection<int, array{status: TStatus, count: int}>
+     */
+    private static function byStatus(string $model, array $cases): Collection
+    {
+        $totals = $model::query()->selectRaw('status, count(*) as total')->groupBy('status')->pluck('total', 'status');
+
+        return collect($cases)->map(fn (\BackedEnum $s) => ['status' => $s, 'count' => (int) ($totals[$s->value] ?? 0)]);
     }
 }

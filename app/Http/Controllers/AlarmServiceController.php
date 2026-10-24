@@ -76,10 +76,11 @@ class AlarmServiceController extends Controller
     {
         $data = $request->validate([
             'reference' => ['required', 'string', 'max:20'],
-            'email' => ['required', 'email', 'max:255'],
-        ]);
+            // Not "email": the fault-report form on the same page has its own email field.
+            'lookup_email' => ['required', 'email', 'max:255'],
+        ], [], ['lookup_email' => 'email']);
 
-        $ticket = ServiceTicket::lookup($data['reference'], $data['email']);
+        $ticket = ServiceTicket::lookup($data['reference'], $data['lookup_email']);
 
         if (! $ticket) {
             // Same message whether the reference or the email was wrong, so neither can be probed.

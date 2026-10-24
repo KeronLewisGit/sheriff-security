@@ -59,6 +59,16 @@ class ProposalRequestTest extends TestCase
         $this->assertSame(0, ProposalRequest::count());
     }
 
+    public function test_too_many_documents_is_shown_on_the_documents_field(): void
+    {
+        Storage::fake('local');
+        $files = array_map(fn (int $i) => UploadedFile::fake()->create("scope{$i}.pdf", 10, 'application/pdf'), range(1, 6));
+
+        $this->from('/request-a-proposal')->followingRedirects()->post('/request-a-proposal', $this->valid(['documents' => $files]))
+            ->assertSee('id="documents-error"', false)->assertSee('Attach up to 5 documents.');
+        $this->assertSame(0, ProposalRequest::count());
+    }
+
     public function test_requests_past_the_response_target_are_overdue_until_someone_responds(): void
     {
         $old = ProposalRequest::factory()->create(['created_at' => now()->subHours(30)]);
@@ -76,6 +86,18 @@ class ProposalRequestTest extends TestCase
         // The target is an editable setting.
         Setting::setMany(['rfp_response_hours' => '1']);
         $this->assertSame([$fresh->id], ProposalRequest::overdue()->pluck('id')->all());
+    }
+
+    public function test_dashboard_counts_requests_per_week_and_per_stage(): void
+    {
+        ProposalRequest::factory()->count(2)->create(['created_at' => now()->startOfWeek()->addHour()]);
+        ProposalRequest::factory()->create(['created_at' => now()->startOfWeek()->subWeeks(2)->addDay(), 'status' => ProposalStatus::Won]);
+        ProposalRequest::factory()->create(['created_at' => now()->subWeeks(12)]);
+
+        $this->actingAs(User::factory()->create(['role' => 'bd']))->get('/admin')->assertOk()
+            ->assertSee('<tr><td>'.now()->startOfWeek()->format('j M Y').'</td><td>2</td></tr>', false)
+            ->assertSee('<tr><td>'.now()->startOfWeek()->subWeeks(2)->format('j M Y').'</td><td>1</td></tr>', false)
+            ->assertSee('<tr><td>'.now()->startOfWeek()->subWeek()->format('j M Y').'</td><td>0</td></tr>', false);
     }
 
     public function test_dashboard_leads_with_the_overdue_count(): void

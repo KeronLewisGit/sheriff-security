@@ -6,9 +6,9 @@ use App\Enums\EmploymentType;
 use App\Enums\JobStatus;
 use App\Http\Controllers\Controller;
 use App\Models\JobPosting;
+use App\Support\Slug;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -67,12 +67,7 @@ class JobPostingController extends Controller
         ]);
         $job->fill($data);
         if (! $job->exists) {
-            $base = Str::slug($data['title']) ?: 'job';
-            $slug = $base;
-            for ($i = 2; JobPosting::where('slug', $slug)->exists(); $i++) {
-                $slug = $base.'-'.$i;
-            }
-            $job->slug = $slug;
+            $job->slug = Slug::unique(JobPosting::class, $data['title'], 'job');
         }
         $job->save();
     }

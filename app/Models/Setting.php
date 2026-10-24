@@ -46,7 +46,8 @@ class Setting extends Model
     public static function allCached(): array
     {
         try {
-            return Cache::remember('settings.all', 3600, fn () => Schema::hasTable('settings') ? static::query()->pluck('value', 'key')->all() : []);
+            // memo(): one cache read per request, however many setting() calls a page makes.
+            return Cache::memo()->remember('settings.all', 3600, fn () => Schema::hasTable('settings') ? static::query()->pluck('value', 'key')->all() : []);
         } catch (Throwable) {
             return []; // No database yet (first install): config defaults apply.
         }
@@ -66,6 +67,6 @@ class Setting extends Model
         foreach ($values as $k => $v) {
             static::query()->updateOrCreate(['key' => $k], ['value' => $v]);
         }
-        Cache::forget('settings.all');
+        Cache::memo()->forget('settings.all');
     }
 }

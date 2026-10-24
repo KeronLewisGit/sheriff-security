@@ -59,7 +59,9 @@ class ApplicationController extends Controller
             'phone.regex' => 'Enter a phone number we can call, e.g. 600 1234.',
             'police_clearance.required' => 'Upload your police clearance. A clear photo of it is fine.',
             'identification.required' => 'Upload your national ID card or passport.',
-            '*.max' => 'Each file must be 5 MB or smaller.',
+            // Named per file field: a bare '*.max' would also relabel name and message length errors.
+            ...array_fill_keys(['police_clearance.max', 'identification.max', 'certificate.*.max', 'cv.max'], 'Each file must be 5 MB or smaller.'),
+            'certificate.max' => 'Attach up to 4 certificates.',
             'consent.accepted' => 'Please confirm we may keep your documents for this application.',
         ]);
 

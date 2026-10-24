@@ -14,9 +14,9 @@
         @if ($filters['status'])<input type="hidden" name="status" value="{{ $filters['status'] }}">@endif
         @if ($filters['q'])<input type="hidden" name="q" value="{{ $filters['q'] }}">@endif
         <label class="sr-only" for="job">Position</label>
-        <select id="job" name="job" class="a-input"><option value="">All positions</option><option value="general" @selected($filters['job'] === 'general')>General applications</option>@foreach ($jobs as $j)<option value="{{ $j->id }}" @selected($filters['job'] === (string) $j->id)>{{ $j->title }}</option>@endforeach</select>
+        <select id="job" name="job" class="a-input max-w-full"><option value="">All positions</option><option value="general" @selected($filters['job'] === 'general')>General applications</option>@foreach ($jobs as $j)<option value="{{ $j->id }}" @selected($filters['job'] === (string) $j->id)>{{ $j->title }}</option>@endforeach</select>
         <label class="sr-only" for="region">Region</label>
-        <select id="region" name="region" class="a-input"><option value="">All regions</option>@foreach (Region::cases() as $r)<option value="{{ $r->value }}" @selected($filters['region'] === $r->value)>{{ $r->label() }}</option>@endforeach</select>
+        <select id="region" name="region" class="a-input max-w-full"><option value="">All regions</option>@foreach (Region::cases() as $r)<option value="{{ $r->value }}" @selected($filters['region'] === $r->value)>{{ $r->label() }}</option>@endforeach</select>
         <button class="a-btn a-btn-ghost">Filter</button>
     </form>
     <div class="a-card overflow-x-auto">

@@ -1,6 +1,6 @@
 <x-layouts.site :title="$service['title']" :description="$service['summary']" :og-image="$service['photo']">
     <x-page-header :title="$service['title']" :tag="$service['short']" :no="$service['tag']" :photo="$service['photo']" :lead="$service['summary']">
-        <nav class="mt-6 text-sm text-white/70" aria-label="Breadcrumb"><a href="{{ route('services') }}" class="underline underline-offset-2 hover:text-white">Services</a> <span aria-hidden="true">/</span> <span aria-current="page">{{ $service['short'] }}</span></nav>
+        <nav class="mt-6 text-sm text-white/70" aria-label="Breadcrumb"><a href="{{ route('services') }}" class="inline-flex min-h-11 items-center underline underline-offset-2 hover:text-white">Services</a> <span aria-hidden="true">/</span> <span aria-current="page">{{ $service['short'] }}</span></nav>
     </x-page-header>
 
     <section class="wrap mt-12 grid gap-10 md:mt-16 lg:grid-cols-[1.5fr_1fr] lg:gap-16">

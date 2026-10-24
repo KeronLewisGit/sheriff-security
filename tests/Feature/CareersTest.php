@@ -70,6 +70,23 @@ class CareersTest extends TestCase
         $this->assertSame(0, JobApplication::count());
     }
 
+    public function test_length_and_count_errors_get_their_own_messages(): void
+    {
+        Storage::fake('local');
+        Notification::fake();
+        $certificates = array_map(fn (int $i) => UploadedFile::fake()->create("c{$i}.pdf", 10, 'application/pdf'), range(1, 5));
+
+        $html = $this->from('/careers/apply')->followingRedirects()
+            ->post('/careers/apply', $this->valid(['first_name' => str_repeat('a', 81), 'certificate' => $certificates]))
+            ->getContent();
+
+        $this->assertStringContainsString('The first name field must not be greater than 80 characters.', $html);
+        $this->assertStringContainsString('id="certificate-error"', $html);
+        $this->assertStringContainsString('Attach up to 4 certificates.', $html);
+        $this->assertStringNotContainsString('Each file must be 5 MB or smaller.', $html);
+        $this->assertSame(0, JobApplication::count());
+    }
+
     public function test_hr_moves_applicants_through_the_pipeline(): void
     {
         $a = JobApplication::factory()->create();
@@ -122,5 +139,9 @@ class CareersTest extends TestCase
         $this->actingAs(User::factory()->create(['role' => 'bd']))->post('/admin/jobs', $data)->assertForbidden();
         $this->actingAs(User::factory()->create(['role' => 'hr']))->post('/admin/jobs', $data)->assertRedirect('/admin/jobs');
         $this->assertSame('alarm-technician', JobPosting::sole()->slug);
+
+        // A second posting with the same title gets its own address.
+        $this->post('/admin/jobs', $data)->assertRedirect('/admin/jobs');
+        $this->assertSame(['alarm-technician', 'alarm-technician-2'], JobPosting::orderBy('id')->pluck('slug')->all());
     }
 }
