@@ -45,9 +45,10 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        // Explicit key names: MySQL caps identifiers at 64 characters and the generated ones are longer.
         Schema::create('compliance_document_vendor_request', function (Blueprint $table) {
-            $table->foreignId('vendor_request_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('compliance_document_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('vendor_request_id')->constrained(indexName: 'cdvr_vendor_request_id_foreign')->cascadeOnDelete();
+            $table->foreignId('compliance_document_id')->constrained(indexName: 'cdvr_compliance_document_id_foreign')->cascadeOnDelete();
             $table->primary(['vendor_request_id', 'compliance_document_id']);
         });
 
