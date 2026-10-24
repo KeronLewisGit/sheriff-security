@@ -6,9 +6,11 @@
 |--------------------------------------------------------------------------
 | Public copy that is not editable from the admin. Every fact here has a
 | source (see 'sources' at the bottom); nothing is invented. Contact details
-| come from the company's own 2021 website (sssgy.net, Wayback Machine) and are
-| only DEFAULTS: the live values are admin-editable settings (Admin → Settings),
-| because they must be confirmed with Sheriff before launch.
+| come from the company's own website (sssgy.net contact page, Wayback Machine,
+| Feb 2023; phone still in the site footer in June 2024) and match the GCCI member
+| directory and Caribfind listings. They are only DEFAULTS: the live values are
+| admin-editable settings (Admin → Settings) and should be re-confirmed with
+| Sheriff before launch, because the company has no live website today.
 */
 
 return [
@@ -20,7 +22,7 @@ return [
     'group_name' => 'Sheriff Guyana',
     'founded' => 2015,
 
-    // Defaults for the editable settings (sssgy.net/contact-us, archived 2021). CONFIRM.
+    // Defaults for the editable settings (sssgy.net/contact-us, archived Feb 2023; GCCI and Caribfind agree). Re-confirm at kick-off.
     'defaults' => [
         'phone' => '+592 227 5691',
         'phone_alt' => '',

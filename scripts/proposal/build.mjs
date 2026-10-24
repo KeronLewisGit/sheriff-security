@@ -11,7 +11,7 @@ const chunks = JSON.parse(fs.readFileSync(path.join(SHOTS, 'chunks.json'), 'utf8
 const OUT_HTML = path.resolve('dist/proposal/proposal.html');
 const OUT_PDF = path.resolve('dist/proposal/Sheriff-Security-Website-Proposal.pdf');
 const DATE = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-const TESTS = process.env.TEST_COUNT ?? '75';
+const TESTS = process.env.TEST_COUNT ?? '76';
 const img = (f) => 'file://' + f;
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -28,9 +28,9 @@ const FONTS = [
   ['Red Hat Mono', 500, 'red-hat-mono-500-normal'],
 ].map(([family, weight, prefix]) => `@font-face { font-family: "${family}"; font-weight: ${weight}; font-style: normal; src: url("${font(prefix)}") format("woff2"); }`).join('\n');
 
-/* The site's mark (resources/views/components/logo.blade.php): a placeholder in Sheriff's colours. */
-const MARK = (h = 46) => `<svg viewBox="0 0 40 44" height="${h}" width="${Math.round(h * 40 / 44)}" aria-hidden="true"><path d="M20 1.5 38 11.5v21L20 42.5 2 32.5v-21z" fill="#3d5bd9"/><path d="M20 6 34 13.8v16.4L20 38 6 30.2V13.8z" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1"/><path d="M27 14.5H16l-3 3v3.2l3 3h8l3 3v3.3l-3 3H13" fill="none" stroke="#fff" stroke-width="3.6" stroke-linejoin="bevel"/></svg>`;
-const LOGO = (h) => `<div class="brand">${MARK(h)}<div><span class="n">SHERIFF</span><span class="s">Security Services</span></div></div>`;
+/* Sheriff's own logo (public/img/brand, the same files the site uses): on-dark for the cover, on-light for the running footer. */
+const LOGO_FILE = (v) => 'file://' + path.resolve(`public/img/brand/sheriff-logo-${v}.svg`);
+const LOGO = (h, v = 'on-dark') => `<img class="logo" src="${LOGO_FILE(v)}" alt="Sheriff Security Service" height="${h}" style="height:${h}px;width:auto">`;
 
 /** Hand-written captions per slice (key = screen name, index = slice). Written from what each slice shows. */
 const CAPTIONS = {
@@ -40,7 +40,7 @@ const CAPTIONS = {
     '“When procurement Googles you first”: the energy-sector pitch with the points an operator’s supplier team checks, cited to OilNOW and Stabroek News.',
     'Marine and air patrol on the indigo chart-grid band. Photo labels mark every image as illustrative (Wikimedia Commons).',
     'GAPSO 2024: 13 of 26 accolades with the named company awards, then the two certified management systems and the CEO’s quote on the workforce insurance plan, each with its source.',
-    'Careers call-to-action showing the live count of open positions, and the footer with services, procurement links and head-office details (the address and phone are from the 2021 site and are admin-editable).',
+    'Careers call-to-action showing the live count of open positions, and the footer with services, procurement links and head-office details (the address and phone from Sheriff’s own site, editable in the back office).',
   ],
   services: [
     'Services hero and the six service cards. Each card states only what a cited source says Sheriff does.',
@@ -185,7 +185,7 @@ function screenPages(sec, [key, title, bullets]) {
     </section>`).join('');
 }
 
-const foot = () => `<footer class="foot"><span>Sheriff Security Services · Website proposal</span><span>Code Canvas Consultants Ltd · ${esc(DATE)}</span></footer>`;
+const foot = () => `<footer class="foot"><span class="fl">${LOGO(18, 'on-light')}Sheriff Security Services · Website proposal</span><span>Code Canvas Consultants Ltd · ${esc(DATE)}</span></footer>`;
 const phone = (k, label) => `<figure><img src="${img(sub(chunks[k])[0])}" alt="${esc(label)}"><figcaption>${esc(label)}</figcaption></figure>`;
 const tile = (k, i, label) => `<figure class="tile"><img src="${img(sub(chunks[k])[i])}" alt="${esc(label)}"><figcaption>${esc(label)}</figcaption></figure>`;
 
@@ -206,7 +206,7 @@ ${FONTS}
   .ptw b { font-weight: 500; color: var(--link); background: var(--blue-soft); padding: 1px 6px; border-radius: 2px; letter-spacing: .08em; }
   .dark .ptw { color: rgba(255,255,255,.7); } .dark .ptw b { color: var(--sky); background: rgba(170,184,255,.14); }
   .graticule { background-color: var(--brand-950); background-image: linear-gradient(rgba(170,184,255,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(170,184,255,.07) 1px, transparent 1px); background-size: 36px 36px; }
-  .brand { display: flex; align-items: center; gap: 12px; } .brand .n { display: block; font-family: "Chakra Petch"; font-weight: 700; font-size: 21pt; letter-spacing: .06em; color: #fff; line-height: 1; } .brand .s { display: block; margin-top: 3px; font-family: "Red Hat Mono"; font-size: 7.5pt; letter-spacing: .2em; text-transform: uppercase; color: var(--sky); }
+  img.logo { display: block; }
   /* cover */
   .cover { color: #fff; border-radius: 4px; padding: 0.6in 0.6in 0.5in; justify-content: space-between; position: relative; }
   .cover h1 { color: #fff; font-size: 44pt; line-height: 1; margin: 14px 0 16px; max-width: 6.4in; }
@@ -225,7 +225,7 @@ ${FONTS}
   .card h3 { font-size: 11.5pt; margin-bottom: 5px; }
   .card ul { margin: 0; padding-left: 15px; } .card li { margin: 2px 0; }
   .tag { position: relative; border-top: 3px solid var(--blue); }
-  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin: 12px 0; } .stat { border-radius: 4px; padding: 11px 12px; color: #fff; } .stat b { display: block; font-family: "Chakra Petch"; font-size: 24pt; line-height: 1; color: var(--sky); } .stat span { font-size: 8.5pt; color: rgba(255,255,255,.82); }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin: 8px 0 6px; } .stat { border-radius: 4px; padding: 11px 12px; color: #fff; } .stat b { display: block; font-family: "Chakra Petch"; font-size: 24pt; line-height: 1; color: var(--sky); } .stat span { font-size: 8.5pt; color: rgba(255,255,255,.82); }
   .note { border-left: 3px solid var(--blue); background: var(--blue-soft); padding: 8px 11px; font-size: 9pt; border-radius: 0 4px 4px 0; margin: 10px 0; }
   .src { font-size: 8pt; color: var(--ink-3); }
   table.feat { width: 100%; border-collapse: collapse; font-size: 9.3pt; } table.feat th, table.feat td { border-bottom: 1px solid var(--line); padding: 7px 8px; text-align: left; vertical-align: top; } table.feat th { font-family: "Red Hat Mono"; font-weight: 500; font-size: 7.5pt; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-3); background: var(--bg); } table.feat td:first-child { font-family: "Chakra Petch"; font-weight: 700; font-size: 11pt; color: var(--brand-950); width: 22%; }
@@ -259,19 +259,19 @@ ${FONTS}
   .weeks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 8px 0 12px; } .weeks div { border: 1px solid var(--line); border-radius: 3px; padding: 10px 11px; font-size: 9.2pt; background: #fff; } .weeks b { display: block; font-family: "Chakra Petch"; font-size: 12pt; color: var(--brand-950); margin-bottom: 3px; } .weeks i { font-style: normal; font-family: "Red Hat Mono"; font-size: 7.8pt; color: var(--link); letter-spacing: .1em; text-transform: uppercase; }
   .next li { margin: 5px 0; }
   .contact { color: #fff; border-radius: 4px; padding: 16px 18px; margin-top: 14px; } .contact b { font-family: "Chakra Petch"; font-size: 15pt; display: block; } .contact p { margin: 4px 0 0; color: rgba(255,255,255,.85); }
-  footer.foot { margin-top: auto; padding-top: 8px; font-size: 7.6pt; color: #8a8ea6; display: flex; justify-content: space-between; font-family: "Red Hat Mono"; letter-spacing: .04em; }
+  footer.foot { margin-top: auto; padding-top: 8px; font-size: 7.6pt; color: #8a8ea6; display: flex; justify-content: space-between; align-items: center; font-family: "Red Hat Mono"; letter-spacing: .04em; } footer.foot .fl { display: flex; align-items: center; gap: 8px; }
   .cover footer.foot, .section-divider footer.foot { display: none; }
 </style></head><body>
 
 <section class="page cover graticule dark">
-  <div style="display:flex;justify-content:space-between;align-items:flex-start">${LOGO(52)}<span class="coord">06°48′N · 058°09′W · Georgetown</span></div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-start">${LOGO(64)}<span class="coord">06°48′N · 058°09′W · Georgetown</span></div>
   <div>
     <p class="ptw"><b>RFP-01</b>Website proposal · ${esc(DATE)}</p>
     <h1>A website, procurement desk and back office <span>for Sheriff Security Services</span></h1>
     <p class="lead">Sheriff has no working website today. This proposal shows a complete one, already built and running as a demo, with a vendor prequalification pack, request-for-proposal intake, alarm fault tickets and online recruitment. It costs US$1,000 a month, with nothing to pay for design and development.</p>
   </div>
   <div class="meta">
-    <div><b>Prepared for</b><strong>Sheriff Security Services</strong> (Sheriff Security Inc.)<br>Georgetown, Guyana<br>Attention: Radica Ramdeen, Chief Executive Officer, and Ameir Ahmad, Managing Director (titles as reported in 2023)</div>
+    <div><b>Prepared for</b><strong>Sheriff Security Services</strong> (Sheriff Security Inc.)<br>Sheriff Street, Georgetown, Guyana<br>Attention: Radica Ramdeen, Chief Executive Officer, and Ameir Ahmad, Managing Director (titles as reported in 2023)</div>
     <div><b>Prepared by</b><strong>Keron Lewis</strong>, Code Canvas Consultants Ltd<br>Port of Spain · codecanvastt.com<br>+1 868 466-CODE · keronlewis@live.com</div>
   </div>
 </section>
@@ -280,6 +280,7 @@ ${FONTS}
   <p class="ptw"><b>01</b>Executive summary</p>
   <h1>Why rebuild now</h1>
   <p><b>Sheriff has no working website.</b> When we checked on 23 October 2026, sssgy.net, the address listed for the company, served the hosting provider’s default cPanel page over plain HTTP, and its HTTPS address returned a Cloudflare 526 error (invalid SSL certificate at the origin). sheriffguyana.com redirects to a GoDaddy domain-parking page. An operator’s procurement officer who searches for Sheriff before a tender finds press coverage, but no company site, no documents and no way to request a quote.</p>
+  <p><b>Worth doing either way:</b> WHOIS shows that sssgy.net, the domain listed for the company, expires on 10 November 2026. Renewing it in Sheriff’s name keeps the address with the company.</p>
   <p>The press coverage itself is strong. OilNOW reported in February 2023 that Sheriff runs ISO 9001:2015 and ISO 45001:2018 management systems and is certified by Guyana’s Local Content Secretariat. In December 2024 Guyana Standard reported that Sheriff won 13 of the 26 accolades at the first GAPSO awards. None of this is on a page Sheriff controls.</p>
   <div class="stat-grid">
     <div class="stat graticule"><b>${SCREEN_COUNT}</b><span>desktop screens built and shown in this proposal, plus 6 phone layouts</span></div>
@@ -307,7 +308,7 @@ ${FONTS}
   <h2>How the pieces connect</h2>
   <p>An operator’s supplier team finds Sheriff, reads the <b>HSE &amp; compliance</b> page and requests the <b>vendor pack</b>. A manager approves the request in the <b>back office</b>, and the requester receives a signed link that works for 7 days (editable), can be withdrawn and logs every download. The same team can send a <b>request for proposal</b> with tender documents. It lands on the proposal board, and the dashboard flags it if nobody has responded within 24 hours. Sheriff Alarms customers log faults and check progress with a ticket number. Recruits apply online, and HR moves them through the pipeline.</p>
   <h2>Content and imagery</h2>
-  <p>Every public statement comes from a cited source: OilNOW, Guyana Standard, Stabroek News, Kaieteur News, the Sheriff Guyana LinkedIn profile and Sheriff’s own 2021 website (Wayback Machine). The contact details are the ones on the 2021 site. They are editable settings and must be confirmed. The hexagon mark is a placeholder drawn in Sheriff’s colours until the official logo files are supplied. The working demo can be shown live on a call.</p>
+  <p>Every public statement comes from a cited source: OilNOW, Guyana Standard, Stabroek News, Kaieteur News, the Sheriff Guyana LinkedIn profile and Sheriff’s own 2021 website (Wayback Machine). The address and phone are the ones on Sheriff’s own contact page (archived February 2023), and they match the Georgetown Chamber of Commerce directory. They are editable settings and will be re-confirmed at kick-off. The logo is Sheriff’s own, from its website. The working demo can be shown live on a call.</p>
   ${foot()}
 </section>
 
@@ -398,7 +399,7 @@ ${sec.screens.map((s) => screenPages(sec, s)).join('')}
   <p class="ptw"><b>07</b>Timeline</p>
   <h1>Six weeks from approval to launch</h1>
   <div class="weeks">
-    <div><i>Week 1</i><b>Kick-off</b>Kick-off call. We collect the brand assets (logo files) and content, and apply them.</div>
+    <div><i>Week 1</i><b>Kick-off</b>Kick-off call. We collect the original logo files and content, and apply them.</div>
     <div><i>Week 2</i><b>Revision round 1</b>Your first round of changes. We configure forms, emails and roles with Sheriff’s real addresses and staff.</div>
     <div><i>Week 3</i><b>Data &amp; content</b>We load the real compliance documents, open positions, services copy and confirmed facts.</div>
     <div><i>Week 4</i><b>Revision round 2</b>Your second round of changes across the site and back office.</div>
@@ -407,8 +408,8 @@ ${sec.screens.map((s) => screenPages(sec, s)).join('')}
   </div>
   <h2>What we need from Sheriff</h2>
   <ul>
-    <li>Logo and brand files (the demo uses a placeholder mark in Sheriff’s colours)</li>
-    <li>Confirmed contact details: phone, email and address (the demo uses the 2021 website’s details)</li>
+    <li>The original logo artwork, if you have it (the demo uses the logo from Sheriff’s website)</li>
+    <li>Confirmation of the phone, email and address (the demo uses those on Sheriff’s own contact page)</li>
     <li>Confirmation of every published fact, including certifications, awards, group companies and leadership titles</li>
     <li>The current compliance documents for the vendor pack (certificates, insurance, policies, GRA and NIS) with their expiry dates</li>
     <li>Access to the sssgy.net and sheriffguyana.com domain settings, and the mailboxes for alerts and replies</li>
@@ -433,7 +434,7 @@ ${sec.screens.map((s) => screenPages(sec, s)).join('')}
     <p>Director, Code Canvas Consultants Ltd · Port of Spain, Trinidad and Tobago</p>
     <p>keronlewis@live.com · +1 868 466-CODE · codecanvastt.com</p>
   </div>
-  <p class="src" style="margin-top:14px">Sources for client facts: OilNOW, “Sheriff Security: the prototype for oil and gas security in Guyana”, Feb 2023 (promoted feature); Guyana Standard, “Sheriff Security cops 13 accolades at GAPSO awards ceremony”, 20 Dec 2024; Stabroek News, 31 Dec 2023; sssgy.net (2021, Wayback Machine). Leadership titles are as reported in 2023 and should be confirmed. Website status checked 23 October 2026.</p>
+  <p class="src" style="margin-top:14px">Sources for client facts: OilNOW, “Sheriff Security: the prototype for oil and gas security in Guyana”, Feb 2023 (promoted feature); Guyana Standard, “Sheriff Security cops 13 accolades at GAPSO awards ceremony”, 20 Dec 2024; Stabroek News, 31 Dec 2023; sssgy.net (2021–2024, Wayback Machine); Georgetown Chamber of Commerce member directory. Leadership titles are as reported in 2023 and should be confirmed. Website status checked 23 October 2026; domain expiry from the public WHOIS record, 24 October 2026.</p>
   ${foot()}
 </section>
 </body></html>`;

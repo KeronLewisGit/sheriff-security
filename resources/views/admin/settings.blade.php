@@ -1,7 +1,7 @@
 <x-layouts.admin title="Settings">
     <form method="POST" action="{{ route('admin.settings.update') }}" class="a-card max-w-3xl space-y-5 p-5">
         @csrf @method('PUT')
-        <p class="text-ink-2">Contact details below came from Sheriff’s 2021 website and must be confirmed before launch. Clearing a field hides it on the website.</p>
+        <p class="text-ink-2">Contact details below came from Sheriff’s own website (last archived 2023–24) and match the Chamber of Commerce directory. Re-confirm them before launch. Clearing a field hides it on the website.</p>
         @foreach ($fields as $key => [$label, $hint])
             <div>
                 <label class="a-label" for="s-{{ $key }}">{{ $label }}</label>

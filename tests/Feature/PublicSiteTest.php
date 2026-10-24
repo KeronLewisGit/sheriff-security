@@ -33,6 +33,20 @@ class PublicSiteTest extends TestCase
             ->assertSee('Get the vendor pack');
     }
 
+    public function test_header_and_footer_use_the_company_logo_files(): void
+    {
+        $response = $this->get('/')->assertOk()
+            ->assertSee('img/brand/sheriff-logo-on-dark.svg', false)
+            ->assertSee('alt="Sheriff Security Service"', false)
+            ->assertSee('apple-touch-icon.png', false);
+
+        $this->assertSame(2, substr_count($response->getContent(), 'sheriff-logo-on-dark.svg'));
+        foreach (['sheriff-logo.svg', 'sheriff-logo-on-dark.svg', 'sheriff-logo-on-light.svg', 'sheriff-logo-on-light.png', 'sheriff-logo-source.png'] as $file) {
+            $this->assertFileExists(public_path('img/brand/'.$file));
+        }
+        $this->assertFileExists(public_path('apple-touch-icon.png'));
+    }
+
     #[DataProvider('innerPages')]
     public function test_every_inner_page_uses_the_shared_page_header(string $url): void
     {

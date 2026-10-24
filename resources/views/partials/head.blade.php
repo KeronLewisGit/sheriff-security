@@ -4,6 +4,7 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#0d0e2b">
 <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
 <script>
     // Apply the saved theme before first paint so there is no flash.
     document.documentElement.classList.add('js');

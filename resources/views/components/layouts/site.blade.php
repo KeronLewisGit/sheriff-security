@@ -22,7 +22,7 @@
         'telephone' => $phone ? '+'.(gy_digits($phone) ?? '') : null,
         'email' => $email ?: null,
         'foundingDate' => (string) sheriff('founded'),
-        'logo' => asset('favicon.svg'),
+        'logo' => asset('img/brand/sheriff-logo-on-light.png'),
         'image' => asset('img/fpso-sunset-1920.webp'),
         'address' => ['@type' => 'PostalAddress', 'streetAddress' => setting('address_line'), 'addressLocality' => setting('address_city'), 'addressCountry' => 'GY'],
         'areaServed' => 'Guyana',
