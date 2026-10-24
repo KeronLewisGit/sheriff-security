@@ -78,11 +78,11 @@
 
             <section class="a-card p-5" aria-labelledby="pipe">
                 <h2 id="pipe" class="font-bold">Proposal pipeline</h2>
-                <ul class="mt-4 space-y-3">
+                <ul class="mt-3">
                     @php($pmax = max(1, $pipeline->max('count')))
                     @foreach ($pipeline as $row)
                         <li>
-                            <a href="{{ route('admin.proposals.index', ['status' => $row['status']->value]) }}" class="grid grid-cols-[8.5rem_1fr_2.5rem] items-center gap-3 hover:text-link">
+                            <a href="{{ route('admin.proposals.index', ['status' => $row['status']->value]) }}" class="grid min-h-11 grid-cols-[8.5rem_1fr_2.5rem] items-center gap-3 hover:text-link">
                                 <span class="text-sm">{{ $row['status']->label() }}</span>
                                 <span class="h-2.5 rounded-full bg-series-track"><span class="block h-full rounded-full bg-series" style="width: {{ round($row['count'] / $pmax * 100) }}%"></span></span>
                                 <span class="r num text-right font-bold">{{ $row['count'] }}</span>
@@ -97,9 +97,9 @@
         @if ($docsExpiring->isNotEmpty() || $docsMissingFile)
             <section class="a-card mt-5 p-5" aria-labelledby="docs">
                 <h2 id="docs" class="flex items-center gap-2 font-bold"><x-icon name="shield" class="h-5 w-5 text-hivis-text" />Vendor-pack documents to update</h2>
-                <ul class="mt-3 space-y-2 text-sm">
+                <ul class="mt-2 text-sm">
                     @foreach ($docsExpiring as $d)
-                        <li class="flex flex-wrap items-center gap-2"><x-chip :tone="$d->isExpired() ? 'critical' : 'attention'" icon="clock">{{ $d->isExpired() ? 'Expired' : 'Expires' }} {{ $d->expires_on?->format('j M Y') }}</x-chip><a class="u-link" href="{{ route('admin.compliance.edit', $d) }}">{{ $d->title }}</a></li>
+                        <li class="flex flex-wrap items-center gap-x-2"><x-chip :tone="$d->isExpired() ? 'critical' : 'attention'" icon="clock">{{ $d->isExpired() ? 'Expired' : 'Expires' }} {{ $d->expires_on?->format('j M Y') }}</x-chip><a class="u-link inline-flex min-h-11 items-center" href="{{ route('admin.compliance.edit', $d) }}">{{ $d->title }}</a></li>
                     @endforeach
                     @if ($docsMissingFile)<li>{{ $docsMissingFile }} listed {{ \Illuminate\Support\Str::plural('document', $docsMissingFile) }} {{ $docsMissingFile === 1 ? 'has' : 'have' }} no file uploaded. <a class="u-link" href="{{ route('admin.compliance.index') }}">Upload</a></li>@endif
                 </ul>
@@ -122,9 +122,15 @@
                 <div class="a-card p-5">
                     <h3 class="font-bold">Recruitment pipeline</h3>
                     @php($hmax = max(1, $hiringPipeline->max('count')))
-                    <ul class="mt-4 space-y-3">
+                    <ul class="mt-3">
                         @foreach ($hiringPipeline as $row)
-                            <li><a href="{{ route('admin.applications.index', ['status' => $row['status']->value]) }}" class="grid grid-cols-[6.5rem_1fr_2.5rem] items-center gap-3 hover:text-link"><span class="text-sm">{{ $row['status']->label() }}</span><span class="h-2.5 rounded-full bg-series-track"><span class="block h-full rounded-full bg-series" style="width: {{ round($row['count'] / $hmax * 100) }}%"></span></span><span class="num text-right font-bold">{{ $row['count'] }}</span></a></li>
+                            <li>
+                                <a href="{{ route('admin.applications.index', ['status' => $row['status']->value]) }}" class="grid min-h-11 grid-cols-[6.5rem_1fr_2.5rem] items-center gap-3 hover:text-link">
+                                    <span class="text-sm">{{ $row['status']->label() }}</span>
+                                    <span class="h-2.5 rounded-full bg-series-track"><span class="block h-full rounded-full bg-series" style="width: {{ round($row['count'] / $hmax * 100) }}%"></span></span>
+                                    <span class="num text-right font-bold">{{ $row['count'] }}</span>
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
                 </div>

@@ -354,7 +354,7 @@
 .admin-nav a { display: flex; align-items: center; gap: 0.75rem; min-height: 2.75rem; padding: 0 0.85rem; border-radius: 3px; color: rgb(255 255 255 / 0.8); font-weight: 500; }
 .admin-nav a:hover { background: rgb(255 255 255 / 0.07); color: #fff; }
 .admin-nav a[aria-current='page'] { background: rgb(170 184 255 / 0.14); color: #fff; box-shadow: inset 3px 0 0 var(--sky); }
-.admin-nav h2 { padding: 1rem 0.85rem 0.35rem; font-family: var(--ff-display), sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgb(255 255 255 / 0.55); }
+.admin-nav h2 { padding: 1rem 0.85rem 0.35rem; font-family: var(--ff-display), sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgb(255 255 255 / 0.62); }
 .data-table { width: 100%; border-collapse: separate; border-spacing: 0; }
 .data-table th { position: sticky; top: 0; background: var(--surface); text-align: left; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
 .data-table td { padding: var(--row-y) 0.9rem; border-bottom: 1px solid var(--line); vertical-align: middle; }

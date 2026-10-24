@@ -16,11 +16,11 @@
             </div>
             <dl class="panel space-y-4 p-6">
                 <div><dt class="ptw">Address</dt><dd class="mt-1 text-lg">{{ setting('address_line') }}<br>{{ setting('address_city') }}, Guyana</dd></div>
-                @if ($phone)<div><dt class="ptw">Phone</dt><dd class="mt-1"><a class="text-lg font-bold text-link" href="{{ tel_href($phone) }}">{{ format_phone($phone) }}</a>@if (setting('phone_alt')) · <a class="u-link" href="{{ tel_href(setting('phone_alt')) }}">{{ format_phone(setting('phone_alt')) }}</a>@endif</dd></div>@endif
-                @if (setting('whatsapp'))<div><dt class="ptw">WhatsApp</dt><dd class="mt-1"><a class="u-link" href="https://wa.me/{{ preg_replace('/\D+/', '', setting('whatsapp')) }}">Message us on WhatsApp</a></dd></div>@endif
-                @if (setting('email'))<div><dt class="ptw">Email</dt><dd class="mt-1"><a class="break-all text-link" href="mailto:{{ setting('email') }}">{{ setting('email') }}</a></dd></div>@endif
+                @if ($phone)<div><dt class="ptw">Phone</dt><dd class="flex flex-wrap items-center gap-x-2"><a class="inline-flex min-h-11 items-center text-lg font-bold text-link" href="{{ tel_href($phone) }}">{{ format_phone($phone) }}</a>@if (setting('phone_alt')) <span aria-hidden="true">·</span> <a class="u-link inline-flex min-h-11 items-center" href="{{ tel_href(setting('phone_alt')) }}">{{ format_phone(setting('phone_alt')) }}</a>@endif</dd></div>@endif
+                @if (setting('whatsapp'))<div><dt class="ptw">WhatsApp</dt><dd><a class="u-link inline-flex min-h-11 items-center" href="https://wa.me/{{ preg_replace('/\D+/', '', setting('whatsapp')) }}">Message us on WhatsApp</a></dd></div>@endif
+                @if (setting('email'))<div><dt class="ptw">Email</dt><dd><a class="inline-flex min-h-11 items-center break-all text-link" href="mailto:{{ setting('email') }}">{{ setting('email') }}</a></dd></div>@endif
                 @if (setting('office_hours'))<div><dt class="ptw">Office hours</dt><dd class="mt-1">{{ setting('office_hours') }}</dd></div>@endif
-                <div><dt class="ptw">Map</dt><dd class="mt-1"><a class="u-link" href="https://www.openstreetmap.org/?mlat={{ sheriff('geo.lat') }}&mlon={{ sheriff('geo.lng') }}#map=16/{{ sheriff('geo.lat') }}/{{ sheriff('geo.lng') }}" rel="noopener" target="_blank">Sheriff Street on OpenStreetMap</a></dd></div>
+                <div><dt class="ptw">Map</dt><dd><a class="u-link inline-flex min-h-11 items-center" href="https://www.openstreetmap.org/?mlat={{ sheriff('geo.lat') }}&mlon={{ sheriff('geo.lng') }}#map=16/{{ sheriff('geo.lat') }}/{{ sheriff('geo.lng') }}" rel="noopener" target="_blank">Sheriff Street on OpenStreetMap</a></dd></div>
             </dl>
         </div>
 
