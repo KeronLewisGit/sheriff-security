@@ -313,7 +313,7 @@ ${FONTS}
   </div>
   <div class="meta">
     <div><b>Prepared for</b><strong>Sheriff Security Services</strong> (Sheriff Security Inc.)<br>Sheriff Street, Georgetown, Guyana<br>Attention: Radica Ramdeen, Chief Executive Officer, and Ameir Ahmad, Managing Director (titles as reported in 2023)</div>
-    <div><b>Prepared by</b><strong>Keron Lewis</strong>, Code Canvas Consultants Ltd<br>Port of Spain · codecanvastt.com<br>+1 868 466-CODE · keronlewis@live.com</div>
+    <div><b>Prepared by</b><strong>Keron Lewis</strong>, Code Canvas Consultants Ltd<br>Port of Spain · codecanvastt.com<br>+1 868 466-CODE · info@codecanvastt.com</div>
   </div>
 </section>
 
@@ -480,7 +480,7 @@ ${SECTIONS.map((sec) => `
   <div class="contact graticule">
     <b>Keron Lewis</b>
     <p>Director, Code Canvas Consultants Ltd · Port of Spain, Trinidad and Tobago</p>
-    <p>keronlewis@live.com · +1 868 466-CODE · codecanvastt.com</p>
+    <p>info@codecanvastt.com<br>Book a call: calendly.com/keronlewis/30min · +1 868 466-CODE · codecanvastt.com</p>
   </div>
   <p class="src" style="margin-top:14px">Sources for client facts: OilNOW, “Sheriff Security: the prototype for oil and gas security in Guyana”, Feb 2023 (promoted feature); Guyana Standard, “Sheriff Security cops 13 accolades at GAPSO awards ceremony”, 20 Dec 2024; Stabroek News, 31 Dec 2023; sssgy.net (2021–2024, Wayback Machine); Georgetown Chamber of Commerce member directory. Leadership titles are as reported in 2023 and should be confirmed. Website status checked 23 October 2026; domain expiry from the public WHOIS record, 24 October 2026.</p>
   ${foot()}
