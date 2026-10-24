@@ -156,7 +156,7 @@ async function shoot(name, url, { width = 1440, height = 900, fullPage = true, m
   const files = []; const labels = [];
   if (!fullPage) {
     const file = path.join(OUT, `${name}.jpg`);
-    await page.screenshot({ path: file, type: 'jpeg', quality: 80 });
+    await page.screenshot({ path: file, type: 'jpeg', quality: 70 });
     files.push(file);
     console.log(`✓ ${name} viewport`);
     return { name, url: absolute ? new URL(url).pathname.replace(/[^/]{20,}$/, '…') : url, chunks: files.map(f => path.resolve(f)), labels: [[]], mobile };
@@ -167,7 +167,7 @@ async function shoot(name, url, { width = 1440, height = 900, fullPage = true, m
   const groups = packBlocks(blocks, maxH, docH);
   for (const [i, g] of groups.entries()) {
     const file = path.join(OUT, groups.length > 1 ? `${name}-${i}.jpg` : `${name}.jpg`);
-    await page.screenshot({ path: file, type: 'jpeg', quality: 80, captureBeyondViewport: true, clip: { x: 0, y: g.top, width, height: g.bottom - g.top } });
+    await page.screenshot({ path: file, type: 'jpeg', quality: 70, captureBeyondViewport: true, clip: { x: 0, y: g.top, width, height: g.bottom - g.top } });
     files.push(file); labels.push(g.labels ?? []);
   }
   console.log(`✓ ${name} → ${groups.length} slice(s): ${groups.map(g => (g.labels ?? []).join(' | ') || '(no heading)').join('  ·  ')}`);
